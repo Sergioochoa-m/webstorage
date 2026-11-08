@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Productos</title>
+     <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
+    <header>
+        <h1>TABLA DE PRODUCTOS</h1>
+    </header>
 
-<button id = "aniadir">añadir</button>
-<button id = "escribir">escribir</button>
-    <p id = "sesion"></p>
-    <p id = "local"></p>
+    <form>
+        <h3>Productos:</h3>
+        <label for="Añadir producto">Añadir producto:</label>
+        <input type="text" id="producto" name="producto" placeholder="Tu producto">
+        <input type="submit" value="Enviar">
+    </form>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>PRODUCTO</th>
+            <TH>CANTIDAD</TH>
+            <th><input type="reset" value="Borrar todo"></th>
+        </tr>
+    </table>
 
 
-      <script src="js/main.js"></script>
+
+
+
+
 </body>
+
 </html>
