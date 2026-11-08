@@ -1,4 +1,4 @@
-const form = document.querySelector('form');
+const form = document.querySelector('#form');
 const inputProducto = document.getElementById('producto');
 const tabla = document.querySelector('table');
 let contadorId = 1;
