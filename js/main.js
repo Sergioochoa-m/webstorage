@@ -1,38 +1,104 @@
 const form = document.querySelector('#form');
-const inputProducto = document.getElementById('producto');
-const tabla = document.querySelector('table');
-let contadorId = 1;
+const inputProducto = document.querySelector('#producto');
+const tabla = document.querySelector('#productos');
+const botonBorrarTodo = document.querySelector('#borrar-todo');
 
+let productos = JSON.parse(localStorage.getItem('productos') || '[]');
+let siguienteId = 1;
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();})
+for (let i = 0; i < productos.length; i++) {
+  if (productos[i].id >= siguienteId) {
+    siguienteId = productos[i].id + 1;
+  }
+}
 
-  const nombreProducto = inputProducto.value.trim();
-if (nombreProducto === '') return;
+function guardarProductos() {
+  localStorage.setItem('productos', JSON.stringify(productos));
+}
 
+function mostrarProductos() {
+  tabla.innerHTML = '';
 
-// const aniadir = document.querySelector('#aniadir')
-// const escribir = document.querySelector('#escibir')
-// const campoSesion = document.querySelector('#sesion')
-// const campoLocal = document.querySelector('#local')
+  for (let i = 0; i < productos.length; i++) {
+    const fila = document.createElement('tr');
+    const celdaId = document.createElement('td');
+    const celdaNombre = document.createElement('td');
+    const celdaCantidad = document.createElement('td');
+    const celdaAccion = document.createElement('td');
+    const botonEliminar = document.createElement('button');
 
+    celdaId.textContent = productos[i].id;
+    celdaNombre.textContent = productos[i].nombre;
+    celdaCantidad.textContent = productos[i].cantidad;
 
+    botonEliminar.textContent = 'Eliminar';
+    botonEliminar.type = 'button';
 
-// aniadir.addEventListener('click', () => {
-//   aniadirCosas()
-// })
+    botonEliminar.addEventListener('click', function () {
+      eliminarProducto(i);
+    });
 
-// escibir.addEventListener('click', () => {
-//   leerCosas()
-// })
+    celdaAccion.appendChild(botonEliminar);
+    fila.appendChild(celdaId);
+    fila.appendChild(celdaNombre);
+    fila.appendChild(celdaCantidad);
+    fila.appendChild(celdaAccion);
+    tabla.appendChild(fila);
+  }
+}
 
-// const aniadirCosas = () => {
-//   localStorage.setItem("nombre", "Ana");
-//   sessionStorage.setItem("sesionData", "Información de...");
-// }
+function agregarProducto(event) {
+  event.preventDefault();
 
-// const leerCosas = () => {
-//   localStorage.getItem("nombre", "Ana");
-//   sessionStorage.getItem("sesionData", "Información de...");
-// }
+  const nombre = inputProducto.value.trim();
+  if (nombre === '') {
+    return;
+  }
 
+  let productoEncontrado = false;
+
+  for (let i = 0; i < productos.length; i++) {
+    if (productos[i].nombre.toLowerCase() === nombre.toLowerCase()) {
+      productos[i].cantidad = productos[i].cantidad + 1;
+      productoEncontrado = true;
+      break;
+    }
+  }
+
+  if (productoEncontrado === false) {
+    const nuevoProducto = {
+      id: siguienteId,
+      nombre: nombre,
+      cantidad: 1
+    };
+
+    productos.push(nuevoProducto);
+    siguienteId = siguienteId + 1;
+  }
+
+  guardarProductos();
+  mostrarProductos();
+  form.reset();
+}
+
+function eliminarProducto(indice) {
+  productos[indice].cantidad = productos[indice].cantidad - 1;
+
+  if (productos[indice].cantidad === 0) {
+    productos.splice(indice, 1);
+  }
+
+  guardarProductos();
+  mostrarProductos();
+}
+
+form.addEventListener('submit', agregarProducto);
+
+botonBorrarTodo.addEventListener('click', function () {
+  productos = [];
+  siguienteId = 1;
+  guardarProductos();
+  mostrarProductos();
+});
+
+mostrarProductos();

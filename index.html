@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -15,25 +15,26 @@
 
     <form id="form">
         <h3>Productos:</h3>
-        <label for="Añadir producto">Añadir producto:</label>
+        <label for="producto">Añadir producto:</label>
         <input type="text" id="producto" name="producto" placeholder="Tu producto">
-        <input type="submit" value="Enviar">
+        <button type="submit">Agregar</button>
     </form>
 
     <table>
-        <tr>
-            <th>ID</th>
-            <th>PRODUCTO</th>
-            <TH>CANTIDAD</TH>
-            <th><input type="reset" value="Borrar todo"></th>
-        </tr>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Acción</th>
+            </tr>
+        </thead>
+        <tbody id="productos"></tbody>
     </table>
 
+    <button type="button" id="borrar-todo">Borrar todo</button>
 
-
-
-
-
+    <script src="js/main.js" defer></script>
 </body>
 
 </html>
