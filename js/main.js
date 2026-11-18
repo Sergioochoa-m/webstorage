@@ -17,21 +17,20 @@ function guardarProductos() {
 }
 
 function mostrarProductos() {
-  tabla.innerHTML = '';
 
   for (let i = 0; i < productos.length; i++) {
-    const fila = document.createElement('tr');
-    const celdaId = document.createElement('td');
-    const celdaNombre = document.createElement('td');
-    const celdaCantidad = document.createElement('td');
-    const celdaAccion = document.createElement('td');
-    const botonEliminar = document.createElement('button');
+    const fila = document.createElement('tr')
+    const celdaId = document.createElement('td')
+    const celdaNombre = document.createElement('td')
+    const celdaCantidad = document.createElement('td')
+    const celdaAccion = document.createElement('td')
+    const botonEliminar = document.createElement('button')
 
     celdaId.textContent = productos[i].id;
-    celdaNombre.textContent = productos[i].nombre;
+    celdaNombre.textContent = productos[i].nombre
     celdaCantidad.textContent = productos[i].cantidad;
 
-    botonEliminar.textContent = 'Eliminar';
+    botonEliminar.textContent = 'Eliminar'
     botonEliminar.type = 'button';
 
     botonEliminar.addEventListener('click', function () {
@@ -39,18 +38,18 @@ function mostrarProductos() {
     });
 
     celdaAccion.appendChild(botonEliminar);
-    fila.appendChild(celdaId);
-    fila.appendChild(celdaNombre);
-    fila.appendChild(celdaCantidad);
-    fila.appendChild(celdaAccion);
-    tabla.appendChild(fila);
+    fila.appendChild(celdaId)
+    fila.appendChild(celdaNombre)
+    fila.appendChild(celdaCantidad)
+    fila.appendChild(celdaAccion)
+    tabla.appendChild(fila)
   }
 }
 
 function agregarProducto(event) {
-  event.preventDefault();
+  event.preventDefault()
 
-  const nombre = inputProducto.value.trim();
+  const nombre = inputProducto.value.trim()
   if (nombre === '') {
     return;
   }
@@ -59,7 +58,7 @@ function agregarProducto(event) {
 
   for (let i = 0; i < productos.length; i++) {
     if (productos[i].nombre.toLowerCase() === nombre.toLowerCase()) {
-      productos[i].cantidad = productos[i].cantidad + 1;
+      productos[i].cantidad = productos[i].cantidad + 1
       productoEncontrado = true;
       break;
     }
@@ -72,33 +71,32 @@ function agregarProducto(event) {
       cantidad: 1
     };
 
-    productos.push(nuevoProducto);
-    siguienteId = siguienteId + 1;
+    productos.push(nuevoProducto)
+    siguienteId = siguienteId + 1
   }
 
   guardarProductos();
   mostrarProductos();
-  form.reset();
+  form.reset()
 }
+console.log(agregarProducto)
 
 function eliminarProducto(indice) {
-  productos[indice].cantidad = productos[indice].cantidad - 1;
+  productos[indice].cantidad = productos[indice].cantidad - 1
 
   if (productos[indice].cantidad === 0) {
     productos.splice(indice, 1);
   }
-
-  guardarProductos();
-  mostrarProductos();
+  mostrarProductos()
 }
 
-form.addEventListener('submit', agregarProducto);
+form.addEventListener('submit', agregarProducto)
 
 botonBorrarTodo.addEventListener('click', function () {
-  productos = [];
+productos = [];
   siguienteId = 1;
-  guardarProductos();
-  mostrarProductos();
+guardarProductos();
+  mostrarProductos()
 });
 
-mostrarProductos();
+mostrarProductos()
